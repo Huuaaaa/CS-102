@@ -55,6 +55,7 @@ average <- mean(age, na.rm = TRUE)
 avg <- paste("The mean age of the respondents is", average)
 print(avg)
 
+
 ```
 
 
@@ -62,27 +63,37 @@ print(avg)
 gender_counts <- table(genderfactor)
 
 # Plot a pie chart
-pie(gender_counts,
-    main = "Gender Distribution",
-    col = rainbow(length(gender_counts)),
-    labels = paste(names(gender_counts), " (", gender_counts, ")", sep = ""),
-    clockwise = TRUE,
-    density = NULL,
-    angle = 45,
-    init.angle = 90,
-    border = "white"
+# Convert the gender factor to a table
+gender_counts <- table(genderfactor)
+
+# Create a bar plot
+barplot(gender_counts,
+        main = "Gender Distribution",
+        col = rainbow(length(gender_counts)),
+        xlab = "Gender",
+        ylab = "Count",
+        border = "white"
 )
 
-# Add a legend with counts
+# Add counts on top of each bar
+text(x = barplot(gender_counts, plot = FALSE), 
+     y = gender_counts + 0.5, 
+     label = gender_counts,
+     pos = 3,
+     cex = 0.8
+)
+
+# Add a legend
 legend("topright",
-       legend = paste(names(gender_counts), " (", gender_counts, ")", sep = ""),
+       legend = names(gender_counts),
        fill = rainbow(length(gender_counts)),
        title = "Gender"
 )
-"This bar plot visualizes the gender distribution among respondents in the survey. 
-Each bar represents the count of respondents on who identified with a particular gender category.
-The height of each bar indicates the number of respondents, with labels on top of each bar showing
-the exact count.The legend on the top-right corner provides a color key for each gender category."
+
+#This bar plot visualizes the gender distribution among respondents in the survey. 
+#Each bar represents the count of respondents on who identified with a particular gender category.
+#The height of each bar indicates the number of respondents, with labels on top of each bar showing
+#the exact count.The legend on the top-right corner provides a color key for each gender category."
 
 ```
 
@@ -97,7 +108,9 @@ pie(sex_table,
     col = sex_colors
 )
 
-#
+#This pie chart illustrates the respondents' sex in the survey. 
+#Each slice of the pie represents the choices, Pink #for Female and Blue for Male. 
+#The provided labels on each slice represents the number of respondents."
 ```
 
 ```{r eight}
@@ -107,4 +120,6 @@ age_labels <- names(age_counts)
 pie(age_counts, labels = age_labels, col = rainbow(length(age_counts)), main = "Age Distribution")
 legend("topright", legend = paste(age_labels, ": ", age_counts), fill = rainbow(length(age_counts)))
 
+
+#The pie chart represents the 
 ```
