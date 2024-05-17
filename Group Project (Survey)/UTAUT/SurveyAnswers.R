@@ -3,7 +3,7 @@ library(readr)
 data <- read_csv("Group Project (Survey)/data.csv")
 view(data)
 
-#Performance Expectancy 1
+#Performance Expectancy 
 PE1 <- data$`using Canva for school-related work helps ME complete assignments more quickly.`
 length(PE1)
 PE1 <- likert_to_numeric(PE1)
@@ -11,10 +11,8 @@ PE1 <- likert_to_numeric(PE1)
 # Calculate mean and standard deviation
 PE1_Mean <- mean(PE1, na.rm = TRUE)
 PE1_SD <- sd(PE1, na.rm = TRUE)
-PE1_Mean
-PE1_SD
 
-#Performance Expectancy 2
+#Performance Expectancy 
 PE2 <- data$`using Canva to organize My schoolwork makes Me more productive.`
 length(PE2)
 
@@ -23,10 +21,8 @@ PE2 <- likert_to_numeric(PE2)
 # Calculate mean and standard deviation
 PE2_Mean <- mean(PE2, na.rm = TRUE)
 PE2_SD <- sd(PE2, na.rm = TRUE)
-PE2_Mean
-PE2_SD
 
-#Performance Expectancy 3
+#Performance Expectancy 
 PE3 <- data$`If I use canva for My school projects, It would increase My chances of receiving praise or succeeding academically.`
 length(PE3)
 
@@ -35,15 +31,7 @@ PE3 <- likert_to_numeric(PE3)
 # Calculate mean and standard deviation
 PE3_Mean <- mean(PE3, na.rm = TRUE)
 PE3_SD <- sd(PE3, na.rm = TRUE)
-PE3_Mean
-PE3_SD
 
-merged_mean <- mean(c(PE1_Mean,PE2_Mean, PE3_Mean), na.rm = TRUE)
-
-merged_sd <- sqrt(mean(c(PE1_SD^2,PE2_SD^2, PE3_SD^2), na.rm = TRUE))
-
-print(merged_mean)
-print(merged_sd)
 
 summary_data <- data.frame(
   Code = c("PE1", "PE2", "PE3"),
@@ -54,8 +42,6 @@ summary_data <- data.frame(
 # Save the data frame as a CSV file
 write.csv(summary_data, "PE.csv", row.names = FALSE)
 
-
-#FC 
 #Social Influence
 FC1 <- data$`I have the necessary tools to use Canva efficiently.`
 length(FC1)
@@ -97,12 +83,7 @@ FC4_SD <- sd(FC4_numeric, na.rm = TRUE)
 FC4_Mean
 FC4_SD
 
-merged_mean <- mean(c(FC1_Mean, FC2_Mean, FC3_Mean, FC4_Mean), na.rm = TRUE)
 
-merged_sd <- sqrt(mean(c(FC1_SD^2, FC2_SD^2, FC3_SD^2, FC4_SD^2), na.rm = TRUE))
-
-print(merged_mean)
-print(merged_sd)
 summary_data2 <- data.frame(
   Code = c("FC1", "FC2", "FC3", "FC4"),
   Mean = c(FC1_Mean, FC2_Mean, FC3_Mean, FC4_Mean),
@@ -111,7 +92,6 @@ summary_data2 <- data.frame(
 
 # Save the data frame as a CSV file
 write.csv(summary_data2, "FC.csv", row.names = FALSE)
-
 
 #Effort Expectancy
 EE1 <- data$`
@@ -148,12 +128,6 @@ EE3_Mean
 length(EE3_numeric)
 EE3_SD
 
-merged_mean <- mean(c(EE1_Mean, EE2_Mean, EE3_Mean), na.rm = TRUE)
-
-merged_sd <- sqrt(mean(c(EE1_SD^2, EE2_SD^2, EE3_SD^2), na.rm = TRUE))
-
-print(merged_mean)
-print(merged_sd)
 
 
 summary_data <- data.frame(
@@ -201,14 +175,6 @@ SI3_Mean
 length(SI3_numeric)
 SI3_SD
 
-merged_mean <- mean(c(SI1_Mean, SI2_Mean, SI3_Mean), na.rm = TRUE)
-
-merged_sd <- sqrt(mean(c(SI1_SD^2, SI2_SD^2, SI3_SD^2), na.rm = TRUE))
-
-print(merged_mean)
-print(merged_sd)
-
-
 summary_data <- data.frame(
   Code = c("SI1", "SI2", "SI3"),
   Mean = c(SI1_Mean, SI2_Mean, SI3_Mean),
@@ -218,3 +184,91 @@ summary_data <- data.frame(
 # Save the data frame as a CSV file
 write.csv(summary_data, "SI.csv", row.names = FALSE)
 
+
+PE <- read_csv("Group Project (Survey)/UTAUT/CSV Files/PE.csv")
+FC <- read_csv("Group Project (Survey)/UTAUT/CSV Files/FC.csv")
+EE <- read_csv("Group Project (Survey)/UTAUT/CSV Files/EE.csv")
+SI <- read_csv("Group Project (Survey)/UTAUT/CSV Files/SI.csv")
+
+# Combine all data frames into one
+merged_data <- bind_rows(PE,SI,FC,EE)
+
+# Save the combined data frame as a CSV file
+write.csv(merged_data, "MergedAnswersData.csv", row.names = FALSE)
+
+
+
+#Behavioral Intention
+
+merged_mean <- mean(c(PE1_Mean,PE2_Mean, PE3_Mean), na.rm = TRUE)
+
+merged_sd <- sqrt(mean(c(PE1_SD^2,PE2_SD^2, PE3_SD^2), na.rm = TRUE))
+
+merged_summary<- data.frame(
+  `Title` = "Performance Expectancy",
+  Mean = merged_mean,
+  SD = merged_sd
+)
+
+# Save merged summary data frame as a CSV file
+write.csv(merged_summary, "PE_Summary.csv", row.names = FALSE)
+
+
+FCmerged_mean <- mean(c(FC1_Mean, FC2_Mean, FC3_Mean, FC4_Mean), na.rm = TRUE)
+FCmerged_sd <- sqrt(mean(c(FC1_SD^2, FC2_SD^2, FC3_SD^2, FC4_SD^2), na.rm = TRUE))
+
+FCmerged_summary<-data.frame(
+  `Title` = "Facilitating Conditions",
+  Mean = FCmerged_mean,
+  SD = FCmerged_sd
+)
+
+# Save FC merged summary data frame as a CSV file
+write.csv(FCmerged_summary, "FC_Summary.csv", row.names = FALSE)
+
+
+EEmerged_mean <- mean(c(EE1_Mean, EE2_Mean, EE3_Mean), na.rm = TRUE)
+EEmerged_sd <- sqrt(mean(c(EE1_SD^2, EE2_SD^2, EE3_SD^2), na.rm = TRUE))
+
+EEmerged_summary<-data.frame(
+  `Title` = "Effort Expectancy",
+  Mean = EEmerged_mean,
+  SD = EEmerged_sd
+)
+
+# Save EE merged summary data frame as a CSV file
+write.csv(EEmerged_summary, "EE_Summary.csv", row.names = FALSE)
+
+
+
+SImerged_mean <- mean(c(SI1_Mean, SI2_Mean, SI3_Mean), na.rm = TRUE)
+SImerged_sd <- sqrt(mean(c(SI1_SD^2, SI2_SD^2, SI3_SD^2), na.rm = TRUE))
+SImerged_summary<-data.frame(
+  `Title` = "Social Influence",
+  Mean = SImerged_mean,
+  SD = SImerged_sd
+)
+
+# Save SI merged summary data frame as a CSV file
+write.csv(SImerged_summary, "SI_Summary.csv", row.names = FALSE)
+
+#Merging
+H1<-read_csv("Group Project (Survey)/UTAUT/CSV Files/EE_Summary.csv")
+H2<-read_csv("Group Project (Survey)/UTAUT/CSV Files/PE_Summary.csv")
+H3<-read_csv("Group Project (Survey)/UTAUT/CSV Files/SI_Summary.csv")
+
+# Combine all summaries into a single data frame
+merged_summary<- rbind(H1, H2, H3)
+
+# Save the merged summary data frame as a CSV file
+write.csv(merged_summary, "Behavioral Intention.csv", row.names = FALSE)
+
+#Use Behaviour
+H4<-read_csv("Group Project (Survey)/UTAUT/CSV Files/FC_Summary.csv")
+H5<-read_csv("Group Project (Survey)/UTAUT/CSV Files/Behavioral Intention.csv.csv")
+
+# Combine all summaries into a single data frame
+merged_summary<- rbind(H4, H5)
+
+# Save the merged summary data frame as a CSV file
+write.csv(merged_summary, "Use Behaviour.csv", row.names = FALSE)
